@@ -1,106 +1,106 @@
 package ru.hh.school.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import net.bytebuddy.dynamic.TypeResolutionStrategy;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-//TODO: оформите entity
+@Entity
 public class Vacancy {
+    @Id
+    @Column(name = "vacancy_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-  private Integer id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employer_id")
+    private Employer employer;
 
-  private Employer employer;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "area_id")
+    private Area area;
 
-  private Area area;
+    private String title;
 
-  private String title;
+    private String description;
+    @Column(name = "compensation_from")
+    private Integer compensationFrom;
+    @Column(name = "compensation_to")
+    private Integer compensationTo;
+    @Column(name = "compensation_gross")
+    private Boolean compensationGross;
+    @Column(name = "creation_time")
+    private LocalDateTime creationTime;
+    @Column(name = "archiving_time")
+    private LocalDateTime archivingTime;
 
-  private String description;
+    public Vacancy() {
+    }
 
-  private Integer compensationFrom;
+    public Vacancy(Employer employer) {
+        this.employer = employer;
+    }
 
-  private Integer  compensationTo;
+    public void setArea(Area area) {
+        this.area = area;
+    }
 
-  private Boolean compensationGross;
+    public Integer getId() {
+        return id;
+    }
 
-  private LocalDateTime creationTime;
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  private LocalDateTime archivingTime;
+    public Employer getEmployer() {
+        return employer;
+    }
 
-  public Vacancy() {
-  }
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
 
-  public Vacancy(Employer employer) {
-    this.employer = employer;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setArea(Area area) {
-    this.area = area;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public Integer getId() {
-    return id;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public void setCompensationFrom(Integer compensationFrom) {
+        this.compensationFrom = compensationFrom;
+    }
 
-  public Employer getEmployer() {
-    return employer;
-  }
+    public void setCompensationTo(Integer compensationTo) {
+        this.compensationTo = compensationTo;
+    }
 
-  public void setEmployer(Employer employer) {
-    this.employer = employer;
-  }
+    public LocalDateTime getArchivingTime() {
+        return archivingTime;
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public void setArchivingTime(LocalDateTime archivingTime) {
+        this.archivingTime = archivingTime;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vacancy vacancy = (Vacancy) o;
+        return Objects.equals(id, vacancy.id);
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public void setCompensationFrom(Integer compensationFrom) {
-    this.compensationFrom = compensationFrom;
-  }
-
-  public void setCompensationTo(Integer compensationTo) {
-    this.compensationTo = compensationTo;
-  }
-
-  public LocalDateTime getArchivingTime() {
-    return archivingTime;
-  }
-
-  public void setArchivingTime(LocalDateTime archivingTime) {
-    this.archivingTime = archivingTime;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Vacancy vacancy = (Vacancy) o;
-    return Objects.equals(id, vacancy.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return 17;
-  }
+    @Override
+    public int hashCode() {
+        return 17;
+    }
 
 }
